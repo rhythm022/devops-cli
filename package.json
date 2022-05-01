@@ -1,0 +1,26 @@
+{
+  "name": "devops-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "bin": {
+    "dev-cli": "/lib/bin/index.js"
+  },
+  "scripts": {
+    "build": "tsc && npm link"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "commander": "^9.2.0",
+    "eslint": "^8.14.0",
+    "eslint-plugin-react": "^7.29.4",
+    "typescript": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.4.1",
+    "@types/node": "^17.0.30"
+  }
+}
