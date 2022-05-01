@@ -4,13 +4,16 @@
  * @Author: Cookie
  * @Date: 2021-07-03 22:28:14
  * @LastEditors: Cookie
- * @LastEditTime: 2021-07-04 14:16:56
+ * @LastEditTime: 2021-07-17 21:15:27
  * @Description:
  */
 
 import { Command } from 'commander'
 
-import { getEslint } from '../eslint'
+
+
+
+import { execEslint } from '../inedx'
 
 const program = new Command()
 
@@ -19,7 +22,7 @@ program
   .description('start eslint and fix code')
   .command('eslint')
   .action((value) => {
-    getEslint()
+    execEslint()
   })
 
 
