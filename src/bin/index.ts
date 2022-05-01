@@ -13,7 +13,7 @@ import { Command } from 'commander'
 
 
 
-import { execEslint } from '../inedx'
+import { execEslint,buildWebpack } from '../inedx'
 
 const program = new Command()
 
@@ -25,5 +25,12 @@ program
     execEslint()
   })
 
+  program
+  .version('0.1.0')
+  .description('start webpack build')
+  .command('webpack')
+  .action((value) => {
+    buildWebpack()
+  })
 
 program.parse(process.argv)

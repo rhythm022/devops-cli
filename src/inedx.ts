@@ -7,6 +7,18 @@
  */
 import { getEslint } from './eslint'
 
+import { loggerError } from './util'
+import { buildWebpack as selfBuildWebpack } from './build/webpack'
+
 export const execEslint = async () => {
   await getEslint()
+}
+
+export const buildWebpack = async () => {
+  try {
+    await getEslint()
+    await selfBuildWebpack()
+  } catch (error) {
+    loggerError(error as string)
+  }
 }
