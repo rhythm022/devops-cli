@@ -2,54 +2,52 @@
  * @Author: Cookie
  * @Date: 2021-07-04 14:02:22
  * @LastEditors: Cookie
- * @LastEditTime: 2021-07-18 22:52:45
+ * @LastEditTime: 2021-07-19 21:07:50
  * @Description:
  */
 
 import webpack from 'webpack';
-import { getCwdPath, loggerTiming, loggerError } from '@/util'
+import { getCwdPath, loggerTiming, loggerError, loggerInfo, loggerSuccess } from '@/util'
 import { loadFile } from '@/util/file'
 import { getProConfig } from './webpack.pro.config'
 import { getDevConfig } from './webpack.dev.config'
-import ora from "ora";
+import { getCssLoaders, getCssPlugin } from './css.config'
 
 const WebpackDevServer = require('webpack-dev-server/lib/Server')
 
 export const buildWebpack = () => {
-  const spinner = ora('Webpack building...\n')
-
   const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
 
-  const compiler = webpack(getProConfig(rewriteConfig));
+  const webpackConfig = getProConfig({ ...rewriteConfig, cssLoader: getCssLoaders(false), ...getCssPlugin() })
 
-  return new Promise((resolve, reject) => {
-    loggerTiming('WEBPACK BUILD');
-    spinner.start();
+  const compiler = webpack(webpackConfig);
+
+  loggerTiming('WEBPACK BUILD');
+
+  try {
     compiler.run((err: any, stats: any) => {
-      console.log(err)
-      if (err) {
-        if (!err.message) {
-          spinner.fail('WEBPACK BUILD FAILED!');
-          loggerError(err);
-          return reject(err);
-        }
-      }
-    });
 
-    spinner.succeed('WEBPACK BUILD Successful!');
-    loggerTiming('WEBPACK BUILD', false);
-  })
+      if (err) {
+        loggerError(err);
+      } else {
+        loggerSuccess('WEBPACK SUCCESS!');
+      }
+      loggerTiming('WEBPACK BUILD', false);
+    });
+  } catch (error) {
+    loggerError(error as string)
+  }
+
 }
 
 export const devWebpack = () => {
-  const spinner = ora('Webpack running dev ...')
-
   const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
-  const webpackConfig = getDevConfig(rewriteConfig)
+  const webpackConfig = getDevConfig({ ...rewriteConfig, cssLoader: getCssLoaders(true) })
 
   const compiler = webpack(webpackConfig);
 
   const devServerOptions = {
+    stats: 'errors-only',
     contentBase: 'dist',
     hot: true,
     historyApiFallback: true,
@@ -60,7 +58,7 @@ export const devWebpack = () => {
   const server = new WebpackDevServer(compiler, devServerOptions);
 
   server.listen(8000, '127.0.0.1', () => {
-    console.log('Starting server on http://localhost:8000');
+    loggerInfo('Starting server on http://localhost:8000');
   });
 
 }
