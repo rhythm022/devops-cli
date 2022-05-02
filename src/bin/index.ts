@@ -13,7 +13,7 @@ import { Command } from 'commander'
 
 
 
-import { execEslint,buildWebpack,buildRollup } from '../inedx'
+import { execEslint,buildWebpack,buildRollup ,devWebpack} from '../inedx'
 
 const program = new Command()
 
@@ -30,6 +30,10 @@ program
   .description('start webpack build')
   .command('webpack')
   .action((value) => {
+    const { NODE_ENV = 'development' } = process.env
+
+    if (NODE_ENV === 'development') return devWebpack()
+    
     buildWebpack()
   })
 

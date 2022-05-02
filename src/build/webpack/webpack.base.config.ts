@@ -1,7 +1,11 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 
 import { getDirPath } from '@/util'
 import babelConfig from './babel.config'
+import { resolve } from 'path'
+
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 interface IWebpack {
   mode?: "development" | "production" | "none";
@@ -21,23 +25,27 @@ export default ({
     entry,
     target: 'web',
     output,
-    resolveLoader: {// 使用 dev-cli 的依赖, 为目标项目打包 ☆☆☆
-      modules: ['node_modules', getDirPath('../../node_modules')]
+    resolveLoader: {
+      modules: ['node_modules', getDirPath('../../node_modules')]// 使用 dev-cli 的 Loader
     },
     resolve: {
-      modules: ['node_modules', getDirPath('../../node_modules')],
+      alias: {
+        '@': resolve('src') // 支持别名
+      },
+      extensions: ['.ts', '.tsx', '.js', '.json'], // 支持 ts
+      modules: ['node_modules', getDirPath('../../node_modules')],// 使用 dev-cli 的依赖, 不使用项目的依赖
     },
     module: {
       rules: [
         {
-          test: /\.(js|jsx)$/, 
+          test: /\.(js|jsx|ts|tsx)$/,
           use: babelConfig,
           exclude: [
-            [getDirPath('node_modules')], // 由于node_modules 都是编译过的文件，这里我们不让 babel 去处理其下面的 js 文件
+            [getDirPath('node_modules')], // 不编译依赖代码
           ]
         },
         {
-          test: /\.css$/,
+          test: /\.(css|less)$/,
           use: [
             'style-loader',
             {
@@ -64,20 +72,17 @@ export default ({
           ],
         },
         {
-          test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-          type: 'asset/inline',
+          test: /\.(png|svg|jpg|gif|jpeg)$/,// 支持图片
+          loader: 'file-loader'
         },
         {
-          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            name: 'static/media/[name].[hash:8].[ext]',
-          },
+          test: /\.(woff|woff2|eot|ttf|otf)$/,// 支持字体
+          loader: 'file-loader'
         },
       ]
     },
     plugins: [
+      new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template,
         filename: 'index.html',

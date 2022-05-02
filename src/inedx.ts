@@ -8,7 +8,7 @@
 import { getEslint } from './eslint'
 
 import { loggerError } from '@/util'
-import { buildWebpack as selfBuildWebpack } from './build/webpack'
+import { buildWebpack as selfBuildWebpack , devWebpack as selfDevWebpack} from './build/webpack'
 import { buildRollup as selfBuildRollup } from './build/rollup'
 
 export const execEslint = async () => {
@@ -24,6 +24,14 @@ export const buildWebpack = async () => {
   }
 }
 
+// webpack 开发
+export const devWebpack = async () => {
+  try {
+    await selfDevWebpack()
+  } catch (error) {
+    loggerError(error as string)
+  }
+}
 
 // rollup 构建
 export const buildRollup = async () => {
