@@ -12,6 +12,7 @@ import { loadFile } from '@/util/file'
 import { getProConfig } from './webpack.pro.config'
 import { getDevConfig } from './webpack.dev.config'
 import { getCssLoaders, getCssPlugin } from './css.config'
+import cacheConfig from './cache.config';
 
 const WebpackDevServer = require('webpack-dev-server/lib/Server')
 
@@ -21,7 +22,7 @@ export const buildWebpack = () => {
 
   const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
 
-  const webpackConfig = getProConfig({ ...rewriteConfig, cssLoader: getCssLoaders(false), ...getCssPlugin() })
+  const webpackConfig = getProConfig({ ...rewriteConfig, cssLoader: getCssLoaders(false), ...getCssPlugin() , ...cacheConfig})
 
   const compiler = webpack(webpackConfig);
 
@@ -33,6 +34,9 @@ export const buildWebpack = () => {
       } else {
         loggerSuccess('WEBPACK SUCCESS!');
       }
+      compiler.close(() => {
+        loggerInfo('WEBPACK GENERATE CACHE');
+      });
       loggerTiming('WEBPACK BUILD', false);
     });
   } catch (error) {
@@ -44,7 +48,7 @@ export const buildWebpack = () => {
 export const devWebpack = () => {
   loggerTiming('WEBPACK DEV');
   const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
-  const webpackConfig = getDevConfig({ ...rewriteConfig, cssLoader: getCssLoaders(true) })
+  const webpackConfig = getDevConfig({ ...rewriteConfig, cssLoader: getCssLoaders(true) , ...cacheConfig})
 
   const compiler = webpack(webpackConfig);
 

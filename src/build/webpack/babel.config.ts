@@ -7,7 +7,7 @@
  */
 
 export default {
-  loader: require.resolve('babel-loader'),
+  loader: 'babel-loader?cacheDirectory=true',
   options: {
     configFile: false, // 禁止读取本 cli 的 babel 配置文件
     babelrc: false, // 禁止读取本 cli 的 babel 配置文件
