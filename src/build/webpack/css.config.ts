@@ -52,8 +52,8 @@ export const getCssPlugin = () => {
   return {
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name].[contenthash].css',
-        chunkFilename: '[id].[contenthash].css',
+        filename: 'static/css/[name].[contenthash:8].css',
+        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
         ignoreOrder: true,
       })
     ]

@@ -17,6 +17,10 @@ interface IWebpack extends Configuration {
   plugins?: any
 }
 
+const imageInlineSizeLimit = parseInt(
+  process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
+);
+
 export default ({
   mode,
   entry,
@@ -51,11 +55,27 @@ export default ({
         },
         {
           test: /\.(png|svg|jpg|gif|jpeg)$/,// 支持图片
-          loader: 'file-loader'
+          loader: 'file-loader',
+          options: {
+            limit: imageInlineSizeLimit,// ??
+            name: 'static/media/[name].[hash:8].[ext]',
+          },
+        },
+        {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          loader: require.resolve('url-loader'),
+          options: {
+            limit: imageInlineSizeLimit,// ??
+            name: 'static/media/[name].[hash:8].[ext]',
+          },
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,// 支持字体
-          loader: 'file-loader'
+          loader: 'file-loader',
+          exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+          options: {
+            name: 'static/media/[name].[hash:8].[ext]',
+          },
         },
         cssLoader // 抽出 cssLoader
       ].filter(Boolean),

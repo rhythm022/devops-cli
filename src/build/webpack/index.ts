@@ -16,13 +16,14 @@ import { getCssLoaders, getCssPlugin } from './css.config'
 const WebpackDevServer = require('webpack-dev-server/lib/Server')
 
 export const buildWebpack = () => {
+  
+  loggerTiming('WEBPACK BUILD');
+
   const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
 
   const webpackConfig = getProConfig({ ...rewriteConfig, cssLoader: getCssLoaders(false), ...getCssPlugin() })
 
   const compiler = webpack(webpackConfig);
-
-  loggerTiming('WEBPACK BUILD');
 
   try {
     compiler.run((err: any, stats: any) => {
@@ -41,6 +42,7 @@ export const buildWebpack = () => {
 }
 
 export const devWebpack = () => {
+  loggerTiming('WEBPACK DEV');
   const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
   const webpackConfig = getDevConfig({ ...rewriteConfig, cssLoader: getCssLoaders(true) })
 
@@ -58,6 +60,7 @@ export const devWebpack = () => {
   const server = new WebpackDevServer(compiler, devServerOptions);
 
   server.listen(8000, '127.0.0.1', () => {
+    loggerTiming('WEBPACK DEV', false);
     loggerInfo('Starting server on http://localhost:8000');
   });
 

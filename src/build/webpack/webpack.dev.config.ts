@@ -2,7 +2,7 @@
  * @Author: Cookie
  * @Date: 2021-07-18 19:16:47
  * @LastEditors: Cookie
- * @LastEditTime: 2021-07-19 16:38:10
+ * @LastEditTime: 2021-07-19 20:35:55
  * @Description:
  */
 
@@ -11,29 +11,33 @@ import { getCwdPath, } from '@/util'
 import { Configuration } from 'webpack'
 
 interface IDevWebpackConfig extends Configuration {
-  entry: {
-    app: string
+  entry?: {
+    app?: string
   }
-  output: {
+  output?: {
+    chunkFilename: string
     filename: string,
     path: string
   }
-  template: string
-  cssLoader: any
+  template?: string,
+  cssLoader?: any,
+  plugins?: any
 }
 
-export const getDevConfig = (config: IDevWebpackConfig): Configuration => { // 除了 mode 项,和 getProConfig 没有任何差别
-  const { entry: { app }, template, output: { filename, path }, cssLoader, plugins, ...rest } = config
+export const getDevConfig = (config: IDevWebpackConfig): Configuration => {
+
+  const { entry, template, output, cssLoader, plugins, ...rest } = config
 
   return {
     ...getBaseConfig({
       mode: 'development',
       entry: {
-        app: getCwdPath(app || './src/index.js')
+        app: getCwdPath(entry?.app || './src/index.js')
       },
       output: {
-        filename: filename || 'build.js',
-        path: getCwdPath(path || './dist'), 
+        chunkFilename: output?.chunkFilename || '[name].[chunkhash].js',
+        filename: output?.filename || '[name].[chunkhash].js',
+        path: getCwdPath(output?.path || './dist'), 
       },
       template: getCwdPath(template || 'public/index.html'),
       cssLoader,
