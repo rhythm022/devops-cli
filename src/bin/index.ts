@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-07-17 21:15:27
  * @Description:
  */
-
+require('module-alias/register')
 import { Command } from 'commander'
 
 

@@ -8,7 +8,7 @@
 
 const rollup = require('rollup');
 import { inputOptions, outputOptions } from "./rollup.config";
-import { loggerTiming } from '../../util'
+import { loggerTiming } from '@/util'
 import ora from "ora";
 
 export const buildRollup = async () => {

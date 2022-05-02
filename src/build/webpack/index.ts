@@ -8,7 +8,7 @@
 
 import webpack from 'webpack';
 import getConfig from './webpack.config'
-import { getCwdPath, loggerTiming,loggerError } from '../../util'
+import { getCwdPath, loggerTiming,loggerError } from '@/util'
 import ora from "ora";
 
 export const buildWebpack = () => {

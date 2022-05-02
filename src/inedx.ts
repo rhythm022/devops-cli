@@ -7,7 +7,7 @@
  */
 import { getEslint } from './eslint'
 
-import { loggerError } from './util'
+import { loggerError } from '@/util'
 import { buildWebpack as selfBuildWebpack } from './build/webpack'
 import { buildRollup as selfBuildRollup } from './build/rollup'
 

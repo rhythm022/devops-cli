@@ -7,7 +7,7 @@
  */
 
 import { ESLint } from 'eslint'
-import { getCwdPath, loggerTiming, loggerSuccess, loggerError, getDirPath } from '../util'
+import { getCwdPath, loggerTiming, loggerError, getDirPath } from '@/util'
 import ora from "ora";
 
 // 1. Create an instance.
@@ -45,7 +45,7 @@ export const getEslint = async (path: string = 'src') => {
     spinner.start()
 
     // 2. Lint files.
-    const results = await eslint.lintFiles([`${getCwdPath()}/${path}`])
+    const results = await eslint.lintFiles([getCwdPath(path)])
 
     // 3. Modify the files with the fixed code.
     await ESLint.outputFixes(results)

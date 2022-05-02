@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-import { getDirPath } from '../../util'
+import { getDirPath } from '@/util'
 import babelConfig from './babel.config'
 
 interface IWebpack {
