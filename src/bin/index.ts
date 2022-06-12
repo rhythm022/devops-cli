@@ -9,7 +9,7 @@
  */
 require('module-alias/register')
 import { Command } from 'commander'
-
+import initGit from '@/inquirer/initGit';
 
 
 
@@ -17,6 +17,11 @@ import { execEslint,buildWebpack,buildRollup ,devWebpack} from '../inedx'
 
 const program = new Command()
 
+/**
+ * @description: eslint 检测
+ * @param {*}
+ * @return {*}
+ */
 program
   .version('0.1.0')
   .description('start eslint and fix code')
@@ -25,6 +30,12 @@ program
     execEslint()
   })
 
+
+  /**
+   * @description: webpack 构建
+   * @param {*}
+   * @return {*}
+   */
   program
   .version('0.1.0')
   .description('start webpack build')
@@ -37,6 +48,12 @@ program
     buildWebpack()
   })
 
+
+  /**
+   * @description: rollup 构建
+   * @param {*}
+   * @return {*}
+   */
   program
   .version('0.1.0')
   .description('start rollup build')
@@ -45,4 +62,18 @@ program
     buildRollup()
   })
 
+
+  /**
+   * @description: 初始化 git 信息
+   * @param {*}
+   * @return {*}
+   */
+  program
+  .version('0.1.0')
+  .description('git init')
+  .command('git init')
+  .action(() => {
+    console.log('gitinit2333')
+    initGit()
+  })
 program.parse(process.argv)
