@@ -41,7 +41,7 @@ const promptList = [
   }
 ];
 
-export default () => {
+export const initGit = () => {
   inquirer.prompt(promptList).then((answers: any) => {
     const { gitType, gitUrl, username, password } = answers
     switch (gitType) {

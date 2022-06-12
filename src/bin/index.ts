@@ -9,7 +9,9 @@
  */
 require('module-alias/register')
 import { Command } from 'commander'
-import initGit from '@/inquirer/initGit';
+import inquirer from '@/inquirer';
+
+const { initGit, addTpl, selectTpl } = inquirer
 
 
 
@@ -73,7 +75,35 @@ program
   .description('git init')
   .command('git init')
   .action(() => {
-    console.log('gitinit2333')
     initGit()
   })
+
+
+  /**
+   * @description: 添加模板
+   * @param {*}
+   * @return {*}
+   */
+  program
+  .version('0.1.0')
+  .description('add tpl')
+  .command('add tpl')
+  .action(() => {
+    addTpl()
+  })
+
+
+/**
+* @description: clone 模板到本地
+* @param {*}
+* @return {*}
+*/
+program
+.version('0.1.0')
+.description('init tpl')
+.command('init tpl')
+.action(() => {
+  selectTpl()
+})
+
 program.parse(process.argv)

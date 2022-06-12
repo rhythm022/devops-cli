@@ -20,7 +20,7 @@ export const buildWebpack = () => {
   
   loggerTiming('WEBPACK BUILD');
 
-  const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
+  const rewriteConfig = loadFile<any>(getCwdPath('./cli.config.json'))
 
   const webpackConfig = getProConfig({ ...rewriteConfig, cssLoader: getCssLoaders(false), ...getCssPlugin() , ...cacheConfig})
 
@@ -47,7 +47,7 @@ export const buildWebpack = () => {
 
 export const devWebpack = () => {
   loggerTiming('WEBPACK DEV');
-  const rewriteConfig = loadFile(getCwdPath('./cli.config.json'))
+  const rewriteConfig = loadFile<any>(getCwdPath('./cli.config.json'))
   const webpackConfig = getDevConfig({ ...rewriteConfig, cssLoader: getCssLoaders(true) , ...cacheConfig})
 
   const compiler = webpack(webpackConfig);

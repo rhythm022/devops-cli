@@ -10,8 +10,11 @@
 const fs = require('fs');
 import { loggerError, loggerSuccess } from './index'
 
-export const loadFile = (path: string) => {
+export const loadFile = <T = {}>(path: string): T | false | undefined => {
   try {
+    if (!fs.existsSync(path)) {
+      return false
+    }
     const data = fs.readFileSync(path, 'utf8');
     const config = JSON.parse(data);
     return config
