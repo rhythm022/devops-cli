@@ -26,7 +26,7 @@ export interface ITpl {
 
 const cacheTpl = getDirPath('../cacheTpl')
 
-export const updateTpl = async (tplUrl: string, name: string, desc: string) => {// update file ../cacheTpl/.tpl.json
+export const updateTpl = async ({tplUrl, name, desc}:ITpl) => {// update file ../cacheTpl/.tpl.json
   try {
     let file = [{
       tplUrl,

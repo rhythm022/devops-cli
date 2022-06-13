@@ -37,18 +37,18 @@ export const addTpl = () => {
 
   inquirer.prompt(promptList).then((answers: any) => {
     const { tplUrl, name, desc } = answers
-    updateTpl(tplUrl, name, desc)
+    updateTpl({tplUrl, name, desc})
   })
 }
 
 export const selectTpl = () => {
-  const tplList = getTplList()
+  const tplList = getTplList() as ITpl[]
   const promptList = [
     {
       type: 'list',
       message: '请选择模板下载:',
       name: 'name',
-      choices: tplList && tplList.map((tpl: ITpl) => tpl.name)
+      choices: tplList.map((tpl: ITpl) => tpl.name)
     },
     {
       type: 'input',
@@ -62,8 +62,9 @@ export const selectTpl = () => {
 
   inquirer.prompt(promptList).then((answers: any) => {
     const { name, path } = answers
-    const select = tplList && tplList.filter((tpl: ITpl) => tpl.name)
-    const tplUrl = select && select[0].tplUrl || ''
+    const select = tplList.filter((tpl: ITpl) => tpl.name)
+    const {tplUrl} = select[0]
+
     loadTpl(name, tplUrl, path)// git clone tplUrl in path
   })
 }

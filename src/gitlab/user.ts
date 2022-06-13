@@ -7,7 +7,7 @@
  */
 
 
-import { gitPost } from "@/util/http";
+import { gitPost } from "@/gitlab/request";
 
 
 

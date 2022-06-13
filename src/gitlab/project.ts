@@ -6,7 +6,7 @@
  * @Description: gitLab 项目模块 api
  */
 
-import { methodV } from "@/util/http";
+import { methodV } from "@/gitlab/request";
 // import { loadFile, existsFile } from '@/util/file'
 // import { getDirPath } from '@/util'
 // const defaultConfig = loadFile(getDirPath('../config/default.config.json')) // 读取本地配置

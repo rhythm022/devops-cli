@@ -4,6 +4,7 @@
  * @LastEditTime: 2021-08-08 00:33:27
  * @Description: request 模块
  */
+import { loggerError } from '@/util';
 import request from 'request'
 const qs = require("qs");
 
@@ -46,7 +47,7 @@ const gitPost = async <T>({ GIT_URL, url, params = {}, query = {} }: IMethodV) =
       });
     })
   } catch (error) {
-    console.log(error)
+    loggerError(error as string)
     throw (error);
   }
 }
@@ -78,6 +79,7 @@ const methodV = async ({ GIT_URL, url, method, params = {}, query = {} }: IMetho
       });
     })
   } catch (error) {
+    loggerError(error as string)
     throw (error);
   }
 }

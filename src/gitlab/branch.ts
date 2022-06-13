@@ -6,7 +6,7 @@
  * @Description: gitLab 分支模块 api
  */
 
-import { methodV } from "@/util/http";
+import { methodV } from "@/gitlab/request";
 
 interface IBranchList {
   pageSize?: number
