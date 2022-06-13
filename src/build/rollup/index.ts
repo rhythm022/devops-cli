@@ -14,7 +14,7 @@ import ora from "ora";
 export const buildRollup = async () => {
   loggerTiming('ROLLUP BUILD');
 
-  const spinner = ora('ROLLUP building...\n')
+  const spinner = ora('ROLLUP Building...\n')
 
   spinner.start();
   try{
