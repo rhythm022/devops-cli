@@ -2,7 +2,7 @@
  * @Author: Cookie
  * @Date: 2021-08-03 23:41:18
  * @LastEditors: Cookie
- * @LastEditTime: 2021-08-13 00:14:49
+ * @LastEditTime: 2021-08-13 12:33:58
  * @Description:
  */
 
@@ -18,7 +18,7 @@ export const addTpl = () => {
       type: 'input',
       message: '请输入仓库地址:',
       name: 'tplUrl',
-      default: 'https://github.com/boty-design/react-tpl#main'
+      default: 'https://github.com/boty-design/react-tpl'
     },
     {
       type: 'input',
@@ -41,7 +41,7 @@ export const addTpl = () => {
   })
 }
 
-export const selectTpl = () => {
+export const selectTpl = () => {// only support download tpl from github
   const tplList = getTplList() as ITpl[]
   const promptList = [
     {
@@ -63,8 +63,9 @@ export const selectTpl = () => {
   inquirer.prompt(promptList).then((answers: any) => {
     const { name, path } = answers
     const select = tplList.filter((tpl: ITpl) => tpl.name)
-    const {tplUrl} = select[0]
+    const { downloadUrl, org } = select[0]
 
-    loadTpl(name, tplUrl, path)// git clone tplUrl in path
+    const url = `${downloadUrl}/${org}/zip/refs/heads/main` // main 
+    loadTpl(name, url, path)
   })
 }
