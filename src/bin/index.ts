@@ -12,101 +12,43 @@ import alias from "module-alias";
 alias(path.resolve(__dirname, "../../"));
 
 import { Command } from 'commander'
-import inquirer from '@/inquirer';
+import {
+  gitInitCommand,
+  webpackCommand,
+  rollupCommand,
+  lintCommand,
+  addTplCommand,
+  selectTplCommand
+} from './internally'
 
-const { initGit, addTpl, selectTpl } = inquirer
+const program = new Command(require('../../package').commandName)
 
+interface ICommand {
+  version: string
+  description: string
+  command: string
+  action: (value?: any) => void
+}
 
-
-import { execEslint,buildWebpack,buildRollup ,devWebpack} from '../inedx'
-
-const program = new Command()
-
-/**
- * @description: eslint 检测
- * @param {*}
- * @return {*}
- */
-program
-  .version('0.1.0')
-  .description('start eslint and fix code')
-  .command('eslint')
-  .action((value) => {
-    execEslint()
+const initCommand = (commandConfig: ICommand[]) => {
+  commandConfig.forEach(({ version, description, command, action }) => {
+    program
+      .version(version)
+      .description(description)
+      .command(command)
+      .action((value) => {
+        action(value)
+      })
   })
+}
 
-
-  /**
-   * @description: webpack 构建
-   * @param {*}
-   * @return {*}
-   */
-  program
-  .version('0.1.0')
-  .description('start webpack build')
-  .command('webpack')
-  .action((value) => {
-    const { NODE_ENV = 'development' } = process.env
-
-    if (NODE_ENV === 'development') return devWebpack()
-    
-    buildWebpack()
-  })
-
-
-  /**
-   * @description: rollup 构建
-   * @param {*}
-   * @return {*}
-   */
-  program
-  .version('0.1.0')
-  .description('start rollup build')
-  .command('rollup')
-  .action((value) => {
-    buildRollup()
-  })
-
-
-  /**
-   * @description: 初始化 git 信息
-   * @param {*}
-   * @return {*}
-   */
-  program
-  .version('0.1.0')
-  .description('git init')
-  .command('git init')
-  .action(() => {
-    initGit()
-  })
-
-
-  /**
-   * @description: 添加模板
-   * @param {*}
-   * @return {*}
-   */
-  program
-  .version('0.1.0')
-  .description('add tpl')
-  .command('add tpl')
-  .action(() => {
-    addTpl()
-  })
-
-
-/**
-* @description: clone 模板到本地
-* @param {*}
-* @return {*}
-*/
-program
-.version('0.1.0')
-.description('init tpl')
-.command('init tpl')
-.action(() => {
-  selectTpl()
-})
+initCommand([
+  gitInitCommand,
+  webpackCommand,
+  rollupCommand,
+  lintCommand,
+  addTplCommand,
+  selectTplCommand
+])
 
 program.parse(process.argv)
