@@ -7,7 +7,10 @@
  * @LastEditTime: 2021-07-17 21:15:27
  * @Description:
  */
-require('module-alias/register')
+import path from "path";
+import alias from "module-alias";
+alias(path.resolve(__dirname, "../../"));
+
 import { Command } from 'commander'
 import inquirer from '@/inquirer';
 
