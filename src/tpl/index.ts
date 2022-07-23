@@ -25,7 +25,7 @@ export interface ITpl {
  * @return {*}
  */
 
-const cacheTpl = getDirPath('../cacheTpl')
+const cacheTpl = '.j30cache'
 
 export const updateTpl = async ({tplUrl, name, desc}:ITpl) => {// update file ../cacheTpl/.tpl.json
   const { pathname } = new URL(tplUrl)
@@ -60,7 +60,7 @@ export const updateTpl = async ({tplUrl, name, desc}:ITpl) => {// update file ..
         ]
       }
     }
-    writeFile(cacheTpl, '.tpl.json', JSON.stringify(file, null, "\t"))
+    writeFile(cacheTpl, '.tpl.json', file)
     loggerSuccess(`${isExist ? 'Update' : 'Add'} Template Successful!`)
   } catch (error) {
     loggerError(error as string)

@@ -25,7 +25,7 @@ const GET = async <T>({ url, query = {} }: IMethodV) => {
         headers: {
           "content-type": "application/json",
           "Accept": "application/vnd.github.v3+json",
-          "User-Agent": "dev-cli-App",
+          "User-Agent": "j30-cli-App",
         },
       }, (error, response, body) => {
         if (!error && body) {

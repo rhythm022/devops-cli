@@ -35,14 +35,14 @@ export default ({
     target: 'web',
     output,
     resolveLoader: {
-      modules: ['node_modules', getDirPath('../../node_modules')]// 使用 dev-cli 的 Loader
+      modules: ['node_modules', getDirPath('../../node_modules')]// 使用 j30-cli 的 Loader
     },
     resolve: {
       alias: {
         '@': resolve('src') // 支持别名
       },
       extensions: ['.ts', '.tsx', '.js', '.json'], // 支持 ts
-      modules: ['node_modules', getDirPath('../../node_modules')],// 使用 dev-cli 的依赖, 不使用项目的依赖
+      modules: ['node_modules', getDirPath('../../node_modules')],// 使用 j30-cli 的依赖, 不使用项目的依赖
     },
     module: {
       rules: [

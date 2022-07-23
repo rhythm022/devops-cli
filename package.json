@@ -1,12 +1,12 @@
 {
   "name": "@rhythm22/dev-cli",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "src/index.js",
   "bin": {
-    "dev-cli": "lib/bin/index.js"
+    "j30": "lib/bin/index.js"
   },
-  "commandName": "dev-cli",
+  "commandName": "j30",
   "scripts": {
     "prepublish": "tsc",
     "build": "tsc && npm link"
@@ -22,6 +22,7 @@
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@j30/testuse": "^1.0.0",
     "@rollup/plugin-image": "^2.1.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
@@ -33,11 +34,14 @@
     "eslint": "^8.14.0",
     "eslint-plugin-react": "^7.29.4",
     "file-loader": "^6.2.0",
+    "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "inquirer": "^8.2.4",
+    "latest-version": "5.1.0",
     "less-loader": "^10.2.0",
     "mini-css-extract-plugin": "^2.6.0",
     "module-alias": "^2.2.2",
+    "npm-check-updates": "^11.8.3",
     "ora": "^5.4.1",
     "postcss": "^8.4.13",
     "postcss-loader": "^6.2.1",
@@ -55,6 +59,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-terser": "^7.0.2",
     "rxjs": "^7.5.5",
+    "shelljs": "^0.8.4",
     "style-loader": "^3.3.1",
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
@@ -63,10 +68,12 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.4.1",
+    "@types/fs-extra": "^9.0.12",
     "@types/inquirer": "^8.2.1",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^17.0.30",
     "@types/request": "^2.48.8",
+    "@types/shelljs": "^0.8.9",
     "typescript": "^4.6.4"
   }
 }

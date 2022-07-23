@@ -25,10 +25,10 @@ const gitLabInit = async (gitUrl: string, username: string, password: string) =>
   if (username && password) {
     try {
       const { access_token } = await getToken(gitUrl, username, password)
-      writeFile(getDirPath('../config'), '.default.gitlab.config.json', JSON.stringify({
+      writeFile('.gitLabConfig', '.default.gitlab.config.json', {
         "GIT_Lab_URL": gitUrl,
         "GIT_Lab_TOKEN": access_token
-      }, null, "\t"))
+      })
       loggerSuccess('Login Successful!')
     } catch (error) {
       loggerError(error as string)

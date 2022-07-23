@@ -18,12 +18,15 @@ import {
   rollupCommand,
   lintCommand,
   addTplCommand,
-  selectTplCommand
+  selectTplCommand,
+  registerPluginCommand,
+  checkVersionCommand
 } from './internally'
+import { initExtraPack } from './extra'
 
 const program = new Command(require('../../package').commandName)
 
-interface ICommand {
+export interface ICommand {
   version: string
   description: string
   command: string
@@ -42,13 +45,21 @@ const initCommand = (commandConfig: ICommand[]) => {
   })
 }
 
-initCommand([
-  gitInitCommand,
-  webpackCommand,
-  rollupCommand,
-  lintCommand,
-  addTplCommand,
-  selectTplCommand
-])
+const init = () => {
+  const extraPacks = initExtraPack()
 
+  initCommand([
+    gitInitCommand,
+    webpackCommand,
+    rollupCommand,
+    lintCommand,
+    addTplCommand,
+    selectTplCommand,
+    registerPluginCommand,
+    checkVersionCommand,
+    ...extraPacks
+  ])
+}
+
+init()
 program.parse(process.argv)

@@ -10,6 +10,7 @@ import { getEslint } from './eslint'
 import { loggerError } from '@/util'
 import { buildWebpack as selfBuildWebpack , devWebpack as selfDevWebpack} from './build/webpack'
 import { buildRollup as selfBuildRollup } from './build/rollup'
+import { checkVersion as selfCheckVersion } from './util/npm'
 
 export const execEslint = async () => {
   await getEslint()
@@ -41,4 +42,8 @@ export const buildRollup = async () => {
   } catch (error) {
     loggerError(error as string)
   }
+}
+
+export const checkVersion = async () => {
+  await selfCheckVersion()
 }
