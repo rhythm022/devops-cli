@@ -7,8 +7,9 @@ import { resolve } from 'path'
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-const { ProgressPlugin } = require('webpack')
 import { Configuration } from 'webpack'
+const chalk = require('chalk')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 interface IWebpack extends Configuration {
   mode?: "development" | "production" | "none";
@@ -38,24 +39,24 @@ export default ({
       modules: ['node_modules', getDirPath('../../node_modules')]// 使用 j30-cli 的 Loader
     },
     resolve: {
+      symlinks: false,
       alias: {
         '@': resolve('src') // 支持别名
       },
       extensions: ['.ts', '.tsx', '.js', '.json'], // 支持 ts
       modules: ['node_modules', getDirPath('../../node_modules')],// 使用 j30-cli 的依赖, 不使用项目的依赖
+      mainFiles: ['index'],
     },
     module: {
       rules: [
         {
           test: /\.(js|jsx|ts|tsx)$/,
           use: babelConfig,
-          exclude: [
-            [getDirPath('node_modules')], // 不编译依赖代码
-          ]
+          exclude: /node_modules/, // 不编译依赖代码
         },
         {
           test: /\.(png|svg|jpg|gif|jpeg)$/,// 支持图片
-          loader: 'file-loader',
+          loader: require.resolve('file-loader'),
           options: {
             limit: imageInlineSizeLimit,// ??
             name: 'static/media/[name].[hash:8].[ext]',
@@ -71,7 +72,7 @@ export default ({
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,// 支持字体
-          loader: 'file-loader',
+          loader: require.resolve('file-loader'),
           exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
           options: {
             name: 'static/media/[name].[hash:8].[ext]',
@@ -81,10 +82,12 @@ export default ({
       ].filter(Boolean),
     },
     plugins: [
+      new ProgressBarPlugin({
+        format: `:msg [:bar] ${chalk.green.bold(':percent')} (:elapsed s)`
+      }),
       new CleanWebpackPlugin({
         cleanOnceBeforeBuildPatterns: [getCwdPath('dist')],
       }),
-      new ProgressPlugin(),
       new HtmlWebpackPlugin({
         template,
         filename: 'index.html',

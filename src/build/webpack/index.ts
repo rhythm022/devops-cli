@@ -13,14 +13,15 @@ import { getProConfig } from './webpack.pro.config'
 import { getDevConfig } from './webpack.dev.config'
 import { getCssLoaders, getCssPlugin } from './css.config'
 import cacheConfig from './cache.config';
+const openBrowser = require('react-dev-utils/openBrowser')
 
-const WebpackDevServer = require('webpack-dev-server/lib/Server')
-
+// const WebpackDevServer = require('webpack-dev-server/lib/Server')
+const WebpackDevServer = require('webpack-dev-server')
 export const buildWebpack = () => {
   
   loggerTiming('WEBPACK BUILD');
 
-  const rewriteConfig = loadFile<any>(getCwdPath('./cli.config.json'))
+  const rewriteConfig = loadFile<any>(getCwdPath('./cli.config.json'), false)
 
   const webpackConfig = getProConfig({ ...rewriteConfig, cssLoader: getCssLoaders(false), ...getCssPlugin() , ...cacheConfig})
 
@@ -47,25 +48,46 @@ export const buildWebpack = () => {
 
 export const devWebpack = () => {
   loggerTiming('WEBPACK DEV');
-  const rewriteConfig = loadFile<any>(getCwdPath('./cli.config.json'))
+  let isFirstCompile = true
+
+  const rewriteConfig = loadFile<any>(getCwdPath('./cli.config.json'), false)
   const webpackConfig = getDevConfig({ ...rewriteConfig, cssLoader: getCssLoaders(true) , ...cacheConfig})
+
+  const HOST = 'localhost'
+  const PORT = 8000
+  const protocol = 'http'
+  const url = `${protocol}://${HOST}:${PORT}`
 
   const compiler = webpack(webpackConfig);
 
   const devServerOptions = {
-    stats: 'errors-only',
-    contentBase: 'dist',
-    hot: true,
+    client: {
+      progress: true,
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
+      logging: 'info',
+    },
     historyApiFallback: true,
+    hot: true,
     compress: true,
-    open: true
+    port: PORT,
+    open: false,
   };
 
-  const server = new WebpackDevServer(compiler, devServerOptions);
+  const server = new WebpackDevServer(devServerOptions, compiler);
 
-  server.listen(8000, '127.0.0.1', () => {
+  compiler.hooks.done.tap('done', stats => {
+    if (isFirstCompile) {
+      isFirstCompile = false
+      console.log('oppo the Browser to:：', url)
+      openBrowser(url)
+    }
+  })
+
+  server.start(() => {
     loggerTiming('WEBPACK DEV', false);
-    loggerInfo('Starting server on http://localhost:8000');
+    loggerInfo(`Starting server on ${url}`);
   });
-
 }

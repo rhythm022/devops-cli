@@ -18,7 +18,14 @@ export default {
         {
           "runtime": "automatic"
         }
-      ]
+      ],
+      [
+        require.resolve("@babel/preset-typescript"),
+        {
+          "isTSX": true,
+          "allExtensions": true
+        }
+      ],
     ],
   },
 }

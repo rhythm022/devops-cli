@@ -9,6 +9,7 @@
 import getBaseConfig from './webpack.base.config'
 import { getCwdPath, } from '@/util'
 import { Configuration } from 'webpack'
+const ESBuildPlugin = require('esbuild-webpack-plugin').default;
 interface IWebpackConfig extends Configuration {
   entry?: {
     app: string
@@ -42,6 +43,9 @@ export const getProConfig = (config: IWebpackConfig): Configuration => {
       plugins
     }),
     optimization: {
+      minimizer: [
+        new ESBuildPlugin(),
+      ],
       runtimeChunk: {
         name: (entrypoint: any) => `runtime-${entrypoint.name}`,
       },
@@ -49,8 +53,9 @@ export const getProConfig = (config: IWebpackConfig): Configuration => {
         cacheGroups: {
           commons: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
             chunks: 'all',
+            priority: 10, // 优先级
+            enforce: true,
           },
         },
       },
