@@ -1,21 +1,27 @@
 import { devWebpack, buildWebpack, buildRollup } from '@/inedx'
 
 /**
+ * @description: webpack 开发
+ * @param {*}
+ * @return {*}
+ */
+export const webpackDevCommand = {
+    version: '0.1.0',
+    description: 'start webpack dev',
+    command: 'start',
+    action: devWebpack
+}
+
+/**
  * @description: webpack 构建
  * @param {*}
  * @return {*}
  */
-export const webpackCommand = {
+ export const webpackBuildCommand = {
     version: '0.1.0',
     description: 'start webpack build',
-    command: 'webpack',
-    action: () => {
-        const { NODE_ENV = 'development' } = process.env
-
-        if (NODE_ENV === 'development') return devWebpack()
-
-        buildWebpack()
-    }
+    command: 'build',
+    action: buildWebpack
 }
 
 
@@ -27,6 +33,6 @@ export const webpackCommand = {
 export const rollupCommand = {
     version: '0.1.0',
     description: 'start rollup build',
-    command: 'rollup',
+    command: 'rollup:dev',
     action: buildRollup
 }

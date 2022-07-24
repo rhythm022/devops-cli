@@ -29,7 +29,6 @@ const eslint = new ESLint({
       sourceType: 'module'
     },
     plugins: [
-      'react',
       '@typescript-eslint'
     ]
   },

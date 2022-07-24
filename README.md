@@ -8,8 +8,9 @@
 | CLI 命令 | 功能 |
 | --- | --- |
 | j30-cli eslint | 对当前项目进行 Eslint 校验 |
-| j30-cli webpack | 使用 Webapck 当前项目进行构建  |
-| j30-cli rollup | 使用 Rollup 当前项目进行构建  |
+| j30-cli start | 使用 Webapck 开发  |
+| j30-cli build | 使用 Webapck 当前项目进行构建  |
+| j30-cli rollup:dev | 使用 Rollup 当前项目进行构建  |
 | j30-cli git init | 本地初始化 git 项目（当前支持 GitLab 部分功能）  |
 | j30-cli add tpl | 自定义添加模板 |
 | j30-cli init tpl | 将添加的模板初始化到本地 |

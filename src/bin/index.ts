@@ -14,7 +14,8 @@ alias(path.resolve(__dirname, "../../"));
 import { Command } from 'commander'
 import {
   gitInitCommand,
-  webpackCommand,
+  webpackDevCommand,
+  webpackBuildCommand,
   rollupCommand,
   lintCommand,
   addTplCommand,
@@ -50,7 +51,8 @@ const init = () => {
 
   initCommand([
     gitInitCommand,
-    webpackCommand,
+    webpackDevCommand,
+    webpackBuildCommand,
     rollupCommand,
     lintCommand,
     addTplCommand,
