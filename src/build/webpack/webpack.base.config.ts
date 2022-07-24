@@ -55,6 +55,14 @@ export default ({
           exclude: /node_modules/, // 不编译依赖代码
         },
         {
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'imgs/[hash:10].[ext]'
+          }
+        },
+        /*
+        {
           test: /\.(png|svg|jpg|gif|jpeg)$/,// 支持图片
           loader: require.resolve('file-loader'),
           options: {
@@ -70,6 +78,7 @@ export default ({
             name: 'static/media/[name].[hash:8].[ext]',
           },
         },
+        */
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,// 支持字体
           loader: require.resolve('file-loader'),
@@ -94,5 +103,13 @@ export default ({
       }),
       ...plugins // 抽出 css plugins
     ].filter(Boolean),
+    stats: {
+      assets: false,
+      moduleAssets: false,
+      runtime: false,
+      runtimeModules: false,
+      modules: false,
+      entrypoints: false,
+    },
   }
 }

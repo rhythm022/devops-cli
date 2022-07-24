@@ -67,7 +67,7 @@ export const devWebpack = () => {
         errors: true,
         warnings: false,
       },
-      logging: 'info',
+      logging: 'error',
     },
     historyApiFallback: true,
     hot: true,
